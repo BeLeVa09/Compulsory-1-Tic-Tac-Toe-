@@ -104,7 +104,7 @@ void swapGrid(int num, char playerID) {
     }
 }
 
-int calculateWin(int inArray[5]) {
+int calculateWin(int inArray[5]) {          // Checking to see if a player has won by running calculations on the hidden values they have "taken" from the tiles
     for (int j{ 0 }; j < 2; j++) {
         for (int k{ 1 }; k < 3; k++) {
             for (int l{ 2 }; l < 4; l++) {
@@ -128,10 +128,12 @@ void game() {
     drawGrid();
 
     bool validInput = 1;
-    int player1[5]{10, 10, 10, 10, 10};
-    int player2[5]{10, 10, 10, 10, 10};
+    int player1[5]{ 10, 10, 10, 10, 10 };
+    int player2[4]{ 10, 10, 10, 10 };
+    int takenSquares[9]{ 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     int index1{ 0 };
     int index2{ 0 };
+    int takenIndex{ 0 };
     bool winningPlayer{ 0 };
 
     for (int i{ 0 }; i < 9; i++) {
@@ -157,7 +159,7 @@ void game() {
 
             if (i % 2 == 0) {
                 player1[index1] = num;
-                index1++;
+                takenSquares[takenIndex] = num;
 
                 swapGrid(num, 'X');
                 drawGrid();
@@ -170,7 +172,7 @@ void game() {
             }
             else {
                 player2[index2] = num;
-                index2++;
+                takenSquares[takenIndex] = num;
 
                 swapGrid(num, 'O');
                 drawGrid();
@@ -182,6 +184,11 @@ void game() {
                 }
             }
         } while (validInput != 1);
+
+        index1++;
+        index2++;
+        takenIndex++;
+
     }
     if (winningPlayer == 0) {
         std::cout << "It's a draw!\n";
