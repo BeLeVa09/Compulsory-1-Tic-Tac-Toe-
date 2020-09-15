@@ -1,9 +1,10 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
-std::string row1{ "| A | B | C |\n" };      
-std::string row2{ "| D | E | F |\n" };      // The characters we wish to change here are index 2, 6 & 10
-std::string row3{ "| G | H | I |\n" };
+//std::string row1{ "| A | B | C |\n" };      
+//std::string row2{ "| D | E | F |\n" };      // The characters we wish to change here are index 2, 6 & 10
+//std::string row3{ "| G | H | I |\n" };
 
 int getInput() {
     char input{};
@@ -54,53 +55,64 @@ int getInput() {
 }
 
 void drawGrid() {
+    std::vector <char> board{ '1', '2', '3', '4', '5', '6', '7', '8', '9' };
     std::string space{ "\t\t\t\t\t\t     " };
 
-    std::cout << "\n\n" << space << "-------------\n";
-    std::cout << space << row1;
-    std::cout << space << row2;
-    std::cout << space << row3;
-    std::cout << space << "-------------\n";
+    std::cout << "\n\n" << space << "---------------\n";
+    std::cout << space;
+    for (int i{ 0 }; i < board.size(); i++) {
+        if (i != 0 && i % 3 == 0) {
+            std::cout << "\n" << space;
+        }
+        std::cout << "| " << board[i] << " |";
+    }
+    std::cout << '\n' << space << "---------------\n";
 
 }
 
-void swapGrid(int num, char playerID) {
-    switch (num) {
-    case 2:
-        row1[2] = playerID;
-        break;
+//void swapGrid(int num, char playerID) {
+//    switch (num) {
+//    case 1:
+//        row1[2] = playerID;
+//        break;
+//
+//    case 7:
+//        row1[6] = playerID;
+//        break;
+//
+//    case 6:
+//        row1[10] = playerID;
+//        break;
+//
+//    case 9:
+//        row2[2] = playerID;
+//        break;
+//
+//    case 5:
+//        row2[6] = playerID;
+//        break;
+//
+//    case 1:
+//        row2[10] = playerID;
+//        break;
+//
+//    case 4:
+//        row3[2] = playerID;
+//        break;
+//
+//    case 3:
+//        row3[6] = playerID;
+//        break;
+//
+//    case 8:
+//        row3[10] = playerID;
+//        break;
+//    }
+//}
 
-    case 7:
-        row1[6] = playerID;
-        break;
-
-    case 6:
-        row1[10] = playerID;
-        break;
-
-    case 9:
-        row2[2] = playerID;
-        break;
-
-    case 5:
-        row2[6] = playerID;
-        break;
-
-    case 1:
-        row2[10] = playerID;
-        break;
-
-    case 4:
-        row3[2] = playerID;
-        break;
-
-    case 3:
-        row3[6] = playerID;
-        break;
-
-    case 8:
-        row3[10] = playerID;
-        break;
+void swapGrid(int index, char playerID) {
+    switch (index) {
+        
     }
 }
 
@@ -108,14 +120,19 @@ int calculateWin(int inArray[5]) {          // Checking to see if a player has w
     for (int j{ 0 }; j < 2; j++) {
         for (int k{ 1 }; k < 3; k++) {
             for (int l{ 2 }; l < 4; l++) {
-                return (inArray[j] + inArray[k] + inArray[l]);
+                std::cout << inArray[j] + inArray[k] + inArray[l];
+                system("pause");
+                if ((inArray[j] + inArray[k] + inArray[l]) == 15) {
+                    return 15;
+                }
             }
         }
     }
+    return -1;
 }
 
 void game() {
-    swapGrid(2, 'A');
+    /*swapGrid(2, 'A');
     swapGrid(7, 'B');
     swapGrid(6, 'C');
     swapGrid(9, 'D');
@@ -123,7 +140,7 @@ void game() {
     swapGrid(1, 'F');
     swapGrid(4, 'G');
     swapGrid(3, 'H');
-    swapGrid(8, 'I');
+    swapGrid(8, 'I');*/
 
     drawGrid();
 
@@ -161,10 +178,11 @@ void game() {
                 player1[index1] = num;
                 takenSquares[takenIndex] = num;
 
-                swapGrid(num, 'X');
+                //swapGrid(num, 'X');
                 drawGrid();
 
-                if (calculateWin(player1) == 15) {
+                int win1 = calculateWin(player1);
+                if (win1 == 15) {
                     i = 9;
                     std::cout << "Player 1 has won!\n";
                     winningPlayer = 1;
@@ -174,10 +192,11 @@ void game() {
                 player2[index2] = num;
                 takenSquares[takenIndex] = num;
 
-                swapGrid(num, 'O');
+                //swapGrid(num, 'O');
                 drawGrid();
 
-                if (calculateWin(player2) == 15) {
+                int win2 = calculateWin(player2);
+                if (win2 == 15) {
                     i = 9;
                     std::cout << "Player 2 has won!\n";
                     winningPlayer = 1;
